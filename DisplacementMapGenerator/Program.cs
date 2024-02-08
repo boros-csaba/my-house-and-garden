@@ -44,3 +44,27 @@ class Area
     public Point Start { get; set; } = null!;
     public Point End { get; set; } = null!;
 }
+
+class Triangle
+{
+    public Point A { get; set; } = null!;
+    public Point B { get; set; } = null!;
+    public Point C { get; set; } = null!;
+
+    public bool Includes(Point point)
+    {
+        var d1 = GetSign(point, A, B);
+        var d2 = GetSign(point, B, C);
+        var d3 = GetSign(point, C, A);
+
+        var has_neg = (d1 < 0) || (d2 < 0) || (d3 < 0);
+        var has_pos = (d1 > 0) || (d2 > 0) || (d3 > 0);
+
+        return has_neg && has_pos;
+    }
+
+    float GetSign(Point p1, Point p2, Point p3)
+    {
+        return (p1.X - p3.X) * (p2.Y - p3.Y) - (p2.X - p3.X) * (p1.Y - p3.Y);
+    }
+}
